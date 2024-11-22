@@ -78,7 +78,6 @@ public class AdministratorController {
 		BeanUtils.copyProperties(form, administrator);
 		administratorService.insert(administrator);
 		return "redirect:/";
-		// gitのpushのテスト
 	}
 
 	/////////////////////////////////////////////////////
