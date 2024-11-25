@@ -3,6 +3,8 @@ package com.example.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 
 import com.example.domain.Administrator;
 import com.example.repository.AdministratorRepository;
@@ -28,7 +30,6 @@ public class AdministratorService {
 	public void insert(Administrator administrator) {
 		administratorRepository.insert(administrator);
 	}
-
 	/**
 	 * ログインをします.
 	 * 
@@ -39,5 +40,15 @@ public class AdministratorService {
 	public Administrator login(String mailAddress, String password) {
 		Administrator administrator = administratorRepository.findByMailAddressAndPassward(mailAddress, password);
 		return administrator;
+	}
+
+	/**
+	 * メールアドレスで管理者情報を検索する
+	 * 
+	 * @param mailAddress メールアドレス
+	 * @return 管理者情報 存在しない場合はnullが返ります
+	 */
+	public Administrator findByMailAddress(String mailAddress) {
+		return administratorRepository.findByMailAddress(mailAddress);
 	}
 }
