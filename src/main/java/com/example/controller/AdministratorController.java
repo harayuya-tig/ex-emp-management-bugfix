@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 
 import com.example.domain.Administrator;
 import com.example.form.InsertAdministratorForm;
@@ -76,7 +75,6 @@ public class AdministratorController {
 	 */
 	@PostMapping("/insert")
 	public String insert(@Validated InsertAdministratorForm form, BindingResult result) {
-		// エラーが存在するなら登録画面へ遷移
 		if(result.hasErrors()) {
 			return toInsert();
 		}
@@ -84,17 +82,7 @@ public class AdministratorController {
 		Administrator administrator = new Administrator();
 		// フォームからドメインにプロパティ値をコピー
 		BeanUtils.copyProperties(form, administrator);
-		
-		// 登録されていないメールアドレスなら管理者を追加する
-		if(administratorService.findByMailAddress(form.getMailAddress()) == null) {
-			administratorService.insert(administrator);
-		} else {
-			// 既に登録されているなら登録画面へ遷移
-			FieldError fieldError = new FieldError(result.getObjectName(), "mailAddress", "既に使用されているメールアドレスです");
-			result.addError(fieldError);
-			return toInsert();
-		}
-
+		administratorService.insert(administrator);
 		return "redirect:/";
 	}
 
