@@ -78,33 +78,11 @@ public class AdministratorController {
 	
 	@PostMapping("/insert")
 	public String insert(@Validated InsertAdministratorForm form, BindingResult result, Model model) {		
-		// // エラーがあれば入力画面へ遷移
-		// if(result.hasErrors()) {
-		// 	return toInsert();
-		// }
-
-		// Administrator administrator = new Administrator();
-		// BeanUtils.copyProperties(form, administrator);
-
-		// // 登録されていないメールアドレスなら管理者を追加する
-		// if(administratorService.findByMailAddress(form.getMailAddress()) == null) {
-		// 	administratorService.insert(administrator);
-		// } else {
-		// 	// 登録されているメールアドレスなら登録画面へ遷移
-		// 	FieldError fieldError = new FieldError(result.getObjectName(), "mailAddress", "既に使用されているメールアドレスです");
-		// 	result.addError(fieldError);
-		// 	return toInsert();
-		// }
-
-		// // エラーがあれば入力画面へ遷移
-		// if(result.hasErrors()) {
-		// 	return toInsert();
-		// }
 
 		Administrator administrator = new Administrator();
 		BeanUtils.copyProperties(form, administrator);
 
-		// メールアドレスが既に登録されているならば、エラーメッセージを格納
+		// 結果がnullでないならば、エラーメッセージを格納
 		if(administratorService.findByMailAddress(form.getMailAddress()) != null) {
 			FieldError fieldError = new FieldError(result.getObjectName(), "mailAddress", "既に使用されているメールアドレスです");
 			result.addError(fieldError);

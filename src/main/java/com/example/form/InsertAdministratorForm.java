@@ -1,6 +1,7 @@
 package com.example.form;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 
@@ -16,7 +17,7 @@ public class InsertAdministratorForm {
 	@Length(max=255, message="255文字以下で入力してください")
 	private String name;
 	/** メールアドレス */
-	@NotBlank(message="メールアドレスを入力してください")
+	@NotEmpty(message="メールアドレスを入力してください")
 	@Email(message="正しいメールアドレスの形式で入力してください")
 	@Length(max=255, message="255文字以下で入力してください")
 	private String mailAddress;
