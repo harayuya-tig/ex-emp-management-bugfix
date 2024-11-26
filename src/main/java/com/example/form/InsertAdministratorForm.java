@@ -26,7 +26,6 @@ public class InsertAdministratorForm {
 	@Length(min=6, max=16, message="6文字以上、16文字以下で入力してください")
 	private String password;
 	/** 確認用パスワード */
-	@Length(min=6, max=16, message="6文字以上、16文字以下で入力してください")
 	private String passwordConfirmation;
 
 	/**
@@ -65,7 +64,7 @@ public class InsertAdministratorForm {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
 	public String getPasswordConfirmation() {
 		return passwordConfirmation;
 	}
