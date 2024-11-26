@@ -134,6 +134,13 @@
                         >
                           6文字以上、16文字以下で入力してください
                         </label>
+                        <label
+                          th:if="${#fields.hasErrors('passwordValid')}" 
+                          th:errors="*{passwordValid}"
+                          class="error-messages"
+                        >
+                          パスワードと確認用パスワードが異なります
+                        </label>
                         <input
                           type="password"
                           name="passwordConfirmation"
