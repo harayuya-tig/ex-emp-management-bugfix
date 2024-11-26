@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,5 +92,35 @@ public class EmployeeController {
 		employee.setDependentsCount(form.getIntDependentsCount());
 		employeeService.update(employee);
 		return "redirect:/employee/showList";
+	}
+
+	/**
+	 * 従業員情報を名前で曖昧検索し、入社日順、メールアドレスの昇順で取得します.
+	 * 
+	 * @param name
+	 * @return employeeList 引数の名前に部分一致する従業員情報一覧
+	 */
+	@GetMapping("/findByFuzzyName")
+	public String findByFuzzyName(String name, Model model) {
+		List<Employee> employeeList = new ArrayList<>();
+		
+		if (name.isEmpty()) {
+			// 空文字なら全件検索を行う
+			employeeList = employeeService.showList();
+		} else {
+			// 曖昧検索を行う
+			employeeList = employeeService.findByFuzzyName(name);
+		}
+
+		// 検索結果がゼロならメッセージを格納し、全件検索を行う
+		if (employeeList.size() == 0) {
+			String message = "１件もありませんでした";
+			model.addAttribute("message", message);
+			employeeList = employeeService.showList();
+		} 
+
+		model.addAttribute("employeeList", employeeList);
+		
+		return "employee/list";
 	}
 }

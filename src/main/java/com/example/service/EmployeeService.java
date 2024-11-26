@@ -52,4 +52,15 @@ public class EmployeeService {
 	public void update(Employee employee) {
 		employeeRepository.update(employee);
 	}
+
+	/**
+	 * 従業員情報を名前で曖昧検索し、入社日順、メールアドレスの昇順で取得します.
+	 * 
+	 * @param name
+	 * @return employeeList 引数の名前に部分一致する従業員情報一覧
+	 */
+	public List<Employee> findByFuzzyName(String name) {
+		List<Employee> employeeList = employeeRepository.findByFuzzyName(name);
+		return employeeList;
+	}
 }

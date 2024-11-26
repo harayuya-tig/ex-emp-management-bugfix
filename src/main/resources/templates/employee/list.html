@@ -97,7 +97,12 @@
           <!-- ここから上を編集する必要はありません -->
 
           <!-- ここにモックのtable要素を貼り付けます -->
-
+          <div th:if="${message != null}" th:text="${message}">1件もありませんでした</div>
+          名前で検索：
+          <form th:action="@{/employee/findByFuzzyName}" method="get">
+            <input type="text" name="name" placeholder="山田">
+            <button type="submit">検索</button>
+          </form>
           <table class="table table-striped">
             <thead>
               <tr>
