@@ -1,6 +1,7 @@
 package com.example.form;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 
@@ -23,6 +24,22 @@ public class InsertAdministratorForm {
 	/** パスワード */
 	@Length(min=6, max=16, message="6文字以上、16文字以下で入力してください")
 	private String password;
+	/** 確認用パスワード */
+	@Length(min=6, max=16, message="6文字以上、16文字以下で入力してください")
+	private String passwordConfirmation;
+
+	/**
+	 * パスワードと確認用パスワードが同値かどうかを確認する。trueでなければエラーになる。
+	 * @return boolean 
+	 */
+	@AssertTrue(message = "パスワードと確認用パスワードが異なります")
+	public boolean isPasswordValid() {
+		if (password == null || password.isEmpty()) {
+			return true;
+		}
+		
+		return password.equals(passwordConfirmation);
+	}
 
 	public String getName() {
 		return name;

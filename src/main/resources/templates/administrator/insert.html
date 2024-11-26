@@ -109,15 +109,38 @@
                           th:errors="*{password}"
                           class="error-messages"
                         >
-                          パスワードを入力してください
+                          6文字以上、16文字以下で入力してください
                         </label>
                         <input
                           type="password"
                           name="password"
                           id="password"
                           class="form-control"
-                          placeholder="password"
+                          placeholder="パスワード"
                           th:field="*{password}"
+                          th:errorclass="error-input"
+                          value="xxxxxxxx"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <label for="passwordConfirmation"> 確認用パスワード: </label>
+                        <label
+                          th:errors="*{passwordConfirmation}"
+                          class="error-messages"
+                        >
+                          6文字以上、16文字以下で入力してください
+                        </label>
+                        <input
+                          type="password"
+                          name="passwordConfirmation"
+                          id="passwordConfirmation"
+                          class="form-control"
+                          placeholder="確認用パスワード"
+                          th:field="*{passwordConfirmation}"
                           th:errorclass="error-input"
                           value="xxxxxxxx"
                         />
