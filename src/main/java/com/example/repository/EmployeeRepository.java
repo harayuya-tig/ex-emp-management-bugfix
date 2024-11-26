@@ -45,7 +45,7 @@ public class EmployeeRepository {
 	private NamedParameterJdbcTemplate template;
 
 	/**
-	 * 従業員一覧情報を入社日順で取得します.
+	 * 従業員一覧情報を入社日順、メールアドレスの昇順で取得します.
 	 * 
 	 * @return 全従業員一覧 従業員が存在しない場合はサイズ0件の従業員一覧を返します
 	 */
@@ -55,6 +55,22 @@ public class EmployeeRepository {
 		List<Employee> developmentList = template.query(sql, EMPLOYEE_ROW_MAPPER);
 
 		return developmentList;
+	}
+
+	/**
+	 * 従業員情報を名前で曖昧検索し、入社日順、メールアドレスの昇順で取得します.
+	 * 
+	 * @param name
+	 * @return employeeList 引数の名前に部分一致する従業員情報一覧
+	 */
+	public List<Employee> findByFuzzyName(String name) {
+		String sql = "SELECT id,name,image,gender,hire_date,mail_address,zip_code,address,telephone,salary,characteristics,dependents_count FROM employees WHERE name LIKE :name ORDER BY hire_date DESC, mail_address;";
+
+		SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + name + "%");
+
+		List<Employee> employeeList = template.query(sql, param, EMPLOYEE_ROW_MAPPER);
+
+		return employeeList;
 	}
 
 	/**
