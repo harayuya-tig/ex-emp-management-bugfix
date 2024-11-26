@@ -58,10 +58,12 @@ public class AdministratorRepository {
 	 * @return 管理者情報 存在しない場合はnullを返します
 	 */
 	public Administrator findByMailAddressAndPassward(String mailAddress, String password) {
+				
 		String sql = "select id,name,mail_address,password from administrators where mail_address= '" + mailAddress
 				+ "' and password='" + password + "'";
 		SqlParameterSource param = new MapSqlParameterSource();
 		List<Administrator> administratorList = template.query(sql, param, ADMINISTRATOR_ROW_MAPPER);
+		
 		if (administratorList.size() == 0) {
 			return null;
 		}
@@ -86,6 +88,12 @@ public class AdministratorRepository {
 	 * @return 管理者情報 存在しない場合はnullを返します
 	 */
 	public Administrator findByMailAddress(String mailAddress) {
+		
+		// nullまたは空文字または空白文字ならnullを返す
+		if (mailAddress == null || mailAddress.isEmpty() || mailAddress.isBlank()) {
+			return null;
+		}
+		
 		String sql = "select id,name,mail_address,password from administrators where mail_address=:mailAddress";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("mailAddress", mailAddress);
 		List<Administrator> administratorList = template.query(sql, param, ADMINISTRATOR_ROW_MAPPER);
